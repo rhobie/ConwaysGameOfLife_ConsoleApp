@@ -6,30 +6,27 @@ namespace ConwaysGameOfLife_console
     {
         static void Main(string[] args)
         {
-            //need to make it update all points after checking them...
-            //this can be done with 2 arrays
-
             int size = 20;
 
             //ROWS ARE FIRST
             int[,] arr = new int[size, size];
 
             PrintArray(arr);
-            arr[10, 10] = 1;
-            arr[10, 11] = 1;
-            arr[10, 12] = 1;
-            arr[10, 13] = 1;
-            arr[10, 14] = 1;
-            arr[9, 10] = 1;
+            //arr[10, 10] = 1;
+            //arr[10, 11] = 1;
+            //arr[10, 12] = 1;
+            //arr[10, 13] = 1;
+            //arr[10, 14] = 1;
+            //arr[9, 10] = 1;
 
-            //should repeat:
-            arr[4, 3] = 1;
-            arr[4, 4] = 1;
-            arr[4, 5] = 1;
+            ////should repeat:
+            //arr[4, 3] = 1;
+            //arr[4, 4] = 1;
+            //arr[4, 5] = 1;
 
             PrintArray(arr);
             
-            //RandomlyPopulateArray(arrBefore);
+            RandomlyPopulateArray(arr);
             PrintArray(arr); //WTF? IF I TURN THIS OFF IT SHOWS THE NEIGHBOURS AS THE CELLS AND STILL WORKS?
 
             for (int i = 0; i < 10000; i++)
@@ -48,8 +45,10 @@ namespace ConwaysGameOfLife_console
             {
                 for (int col = 0; col < _arrBefore.GetLength(1); col++)
                 {
+
                     int aliveNeighbours = 0;
 
+                    //should really be done as a loop instead of this massive IF block
                     if (row - 1 > 0)  //UP
                         aliveNeighbours += _arrBefore[row - 1, col + 0];
 
