@@ -6,6 +6,9 @@ namespace ConwaysGameOfLife_console
     {
         static void Main(string[] args)
         {
+            //need to make it update all points after checking them...
+            //this can be done with 2 arrays
+
             int size = 20;
 
             int[,] arr = new int[size, size];
