@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2015
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConwaysGameOfLife_console", "ConwaysGameOfLife_console\ConwaysGameOfLife_console.csproj", "{71692E73-9E92-4A7A-9B6D-A640C9EE66EC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{71692E73-9E92-4A7A-9B6D-A640C9EE66EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71692E73-9E92-4A7A-9B6D-A640C9EE66EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71692E73-9E92-4A7A-9B6D-A640C9EE66EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71692E73-9E92-4A7A-9B6D-A640C9EE66EC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2BB2987A-0A9B-46F9-8833-FD9D113377B2}
+	EndGlobalSection
+EndGlobal
