@@ -11,70 +11,96 @@ namespace ConwaysGameOfLife_console
 
             int size = 20;
 
+            //ROWS ARE FIRST
             int[,] arr = new int[size, size];
 
             PrintArray(arr);
-            Console.Read();
-            //arr[10, 10] = 1;
-            //arr[10, 11] = 1;
-            //arr[9, 10] = 1;
-            //PrintArray(arr);
-            //Console.Read();
-            RandomlyPopulateArray(arr);
+            arr[10, 10] = 1;
+            arr[10, 11] = 1;
+            arr[10, 12] = 1;
+            arr[10, 13] = 1;
+            arr[10, 14] = 1;
+            arr[9, 10] = 1;
+
+            //should repeat:
+            arr[4, 3] = 1;
+            arr[4, 4] = 1;
+            arr[4, 5] = 1;
+
             PrintArray(arr);
-            Console.Read();
+            
+            //RandomlyPopulateArray(arrBefore);
+            //PrintArray(arr); //WTF? IF I TURN THIS OFF IT SHOWS THE NEIGHBOURS AS THE CELLS AND STILL WORKS?
 
             for (int i = 0; i < 10000; i++)
             {
-                CalcualteNewNumbers(arr);
+                arr = CalcualteNewNumbers(arr);
                 PrintArray(arr);
-                Console.Read();
             }
-
-            Console.Read();
         }
 
-        static void CalcualteNewNumbers(int[,] arr)
+        static int[,] CalcualteNewNumbers(int[,] _arrBefore)
         {
-            //traverse array, for each of each elements neighbours check the cells around it
+            int[,] arrAfter = new int[_arrBefore.GetLength(0), _arrBefore.GetLength(1)];
 
-            //if cell is one, and it has less than 2 alive neighbours OR more than 3 neighbours, set it to zero
-            //if cell is zero and it has 3 neighbours set it to one
-
-            for (int i = 0; i < arr.GetLength(0); i++)
+            //traverse array, at each point count the live neighbours each cell has around it
+            for (int row = 0; row < _arrBefore.GetLength(0); row++)
             {
-                for (int j = 0; j < arr.GetLength(1); j++)
+                for (int col = 0; col < _arrBefore.GetLength(1); col++)
                 {
-                    //this really needs to be rewritten...
-                    //count neighbours
                     int aliveNeighbours = 0;
-                    if (i - 1 > 0 && arr[i - 1, j + 0] == 1) //left
-                        aliveNeighbours++;
-                    if (i + 1 < arr.GetLength(0) - 1 && arr[i + 1, j + 0] == 1) //right
-                        aliveNeighbours++;
-                    if (i - 1 > 0 && j + 1 < arr.GetLength(0) - 1 && arr[i - 1, j + 1] == 1) //bottom left
-                        aliveNeighbours++;
-                    if (i + 1 < arr.GetLength(0) - 1 && j + 1 < arr.GetLength(0) - 1 && arr[i + 1, j + 1] == 1) //bottom right 
-                        aliveNeighbours++;
-                    if (i + 1 < arr.GetLength(0) - 1 && j - 1 > 0 && arr[i + 1, j - 1] == 1) //top right
-                        aliveNeighbours++;
-                    if (i - 1 > 0 && j - 1 > 0 && arr[i - 1, j - 1] == 1) //top left
-                        aliveNeighbours++;
-                    if (j + 1 < arr.GetLength(0) - 1 && arr[i + 0, j + 1] == 1) //down
-                        aliveNeighbours++;
-                    if (j - 1 > 0 && arr[i + 0, j - 1] == 1) //up
-                        aliveNeighbours++;
 
-                    if (aliveNeighbours < 2 || aliveNeighbours > 3)
-                    {
-                        arr[i, j] = 0;
-                    }
-                    else if (aliveNeighbours == 3)
-                    {
-                        arr[i, j] = 1;
-                    }
+                    if (row - 1 > 0)  //UP
+                        aliveNeighbours += _arrBefore[row - 1, col + 0];
+
+                    if (row + 1 < _arrBefore.GetLength(0) - 1) //DOWN
+                        aliveNeighbours += _arrBefore[row + 1, col + 0];
+
+                    if (row - 1 > 0 && col + 1 < _arrBefore.GetLength(1) - 1) //UPPER RIGHT
+                        aliveNeighbours += _arrBefore[row - 1, col + 1];
+
+                    if (row + 1 < _arrBefore.GetLength(0) - 1 && col + 1 < _arrBefore.GetLength(1) - 1) //LOWER RIGHT
+                        aliveNeighbours += _arrBefore[row + 1, col + 1];
+
+                    if (row + 1 < _arrBefore.GetLength(0) - 1 && col - 1 > 0) //LOWER LEFT
+                        aliveNeighbours += _arrBefore[row + 1, col - 1];
+
+                    if (row - 1 > 0 && col - 1 > 0) // UPPER LEFT
+                        aliveNeighbours += _arrBefore[row - 1, col - 1];
+
+                    if (col + 1 < _arrBefore.GetLength(1) - 1) //RIGHT
+                        aliveNeighbours += _arrBefore[row + 0, col + 1];
+
+                    if (col - 1 > 0) //LEFT
+                        aliveNeighbours += _arrBefore[row + 0, col - 1];
+
+                    arrAfter[row, col] = aliveNeighbours;
                 }
             }
+            PrintArray(arrAfter);
+
+            //assign values to new array based on amount of alive neighbours
+
+            //-If the cell is alive, then it stays alive if it has either 2 or 3 live neighbors
+            //-If the cell is dead, then it springs to life only in the case that it has 3 live neighbors
+            for (int row = 0; row < _arrBefore.GetLength(0); row++)
+            {
+                for (int col = 0; col < _arrBefore.GetLength(1); col++)
+                {
+                    if (_arrBefore[row, col] == 1)
+                    {
+                        if (arrAfter[row, col] == 2 || arrAfter[row, col] == 3)
+                            arrAfter[row, col] = 1;
+                        else
+                            arrAfter[row, col] = 0;
+                    }
+                    else if (arrAfter[row, col] == 3)
+                        arrAfter[row, col] = 1;
+                    else
+                        arrAfter[row, col] = 0;
+                }
+            }
+            return arrAfter;   
         }
 
         static void PrintArray(int[,] arr)
@@ -88,6 +114,7 @@ namespace ConwaysGameOfLife_console
                 }
                 Console.WriteLine();
             }
+            Console.Read();
         }
 
         static void RandomlyPopulateArray(int[,] arr)
@@ -100,25 +127,6 @@ namespace ConwaysGameOfLife_console
                     arr[i, j] = rand.Next(2);
                 }
             }
-
         }
-
-        //Console.
-        //static ref int[] CreateBlankArray(int cols, int rows)
-        //{
-        //    int[] arrRows = new int[rows];
-        //    for (int i = 0; i < col; i++)
-        //    {
-
-        //    }
-
-
-        //    return ref arrRows[];
-        //}
-
-        //void PrintArray(int[] arr)
-        //{
-
-        //}
     }
 }
