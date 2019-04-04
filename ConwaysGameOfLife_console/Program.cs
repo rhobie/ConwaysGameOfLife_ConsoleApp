@@ -30,7 +30,7 @@ namespace ConwaysGameOfLife_console
             PrintArray(arr);
             
             //RandomlyPopulateArray(arrBefore);
-            //PrintArray(arr); //WTF? IF I TURN THIS OFF IT SHOWS THE NEIGHBOURS AS THE CELLS AND STILL WORKS?
+            PrintArray(arr); //WTF? IF I TURN THIS OFF IT SHOWS THE NEIGHBOURS AS THE CELLS AND STILL WORKS?
 
             for (int i = 0; i < 10000; i++)
             {
