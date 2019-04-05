@@ -8,11 +8,20 @@ namespace ConwaysGameOfLife_console
     {
         static void Main(string[] args)
         {
-            int width = Console.LargestWindowWidth;// 50; //Console.LargestWindowWidth;
-            int height = Console.LargestWindowHeight;// 50;//Console.LargestWindowHeight;
+            //TODO: make this so if custom values are given they will never go over the max
+            int width = Console.LargestWindowWidth;// 50;
+            int height = Console.LargestWindowHeight;// 50;
 
             SetupConsoleWindow(ref width, ref height);
             int[,] arr = new int[height, width];
+
+            //TODO: add different key presses to restart with different settings
+
+            //Console.WriteLine("Hold ENTER to progress time or tap ENTER to progress one frame at a time");
+            //Console.Read();
+            //Console.Clear();
+
+            //TODO: set up standard shapes so that they can be placed in the window
 
             ////blinker:
             //arr[4, 3] = 1;
@@ -28,7 +37,7 @@ namespace ConwaysGameOfLife_console
             //arr[21, 23] = 1;
 
             //PrintArray(arr);
-            
+
             RandomlyPopulateArray(arr);
             PrintArray(arr);
 
@@ -51,7 +60,7 @@ namespace ConwaysGameOfLife_console
                 {
                     int aliveNeighbours = 0;
 
-                    //should really be done as a loop instead of this massive IF block
+                    //TODO: rewrite live neighbour count as loop instead of massive IF block
                     if (row - 1 > 0)  //UP
                         aliveNeighbours += _arrBefore[row - 1, col + 0];
 
@@ -119,7 +128,7 @@ namespace ConwaysGameOfLife_console
                 sb.AppendLine();
             }
             Console.Write(sb);
-            Console.Read();
+            //Console.Read(); //uncomment if you want to progress frame by frame instead of autoplay
         }
 
         static void RandomlyPopulateArray(int[,] arr)
