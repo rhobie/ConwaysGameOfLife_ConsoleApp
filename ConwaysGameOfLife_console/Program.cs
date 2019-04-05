@@ -8,7 +8,11 @@ namespace ConwaysGameOfLife_console
     {
         static void Main(string[] args)
         {
-            //TODO: make this so if custom values are given they will never go over the max
+            //TODO: make multithreaded so that calculations run separetely from drawing, hopefully this will reduce flicker
+
+            //TODO: Separate 'Game Of Life' to it's own class
+
+            //TODO: make this so if custom values are given for size they will never go over the max
             int width = Console.LargestWindowWidth;// 50;
             int height = Console.LargestWindowHeight;// 50;
 
