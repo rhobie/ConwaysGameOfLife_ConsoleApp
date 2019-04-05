@@ -10,10 +10,12 @@ namespace ConwaysGameOfLife_console
             int height = Console.LargestWindowHeight;// 50;//Console.LargestWindowHeight;
 
             Console.SetWindowSize(width, height);
+            Console.ForegroundColor = ConsoleColor.Green;
 
-            //if window is full screen minus 4 from width so that columns fit
-            if (width == Console.LargestWindowWidth)
+            if (width == Console.LargestWindowWidth) //minus 4 from width so that columns fit
                 width -= 4;
+            if (height == Console.LargestWindowHeight) // minus 1 from height so that columns fit
+                height -= 1;
             int[,] arr = new int[height, width];
 
             ////blinker:
@@ -83,9 +85,8 @@ namespace ConwaysGameOfLife_console
             }
 
             //assign values to new array based on amount of alive neighbours
-
-            //-If the cell is alive, then it stays alive if it has either 2 or 3 live neighbors
-            //-If the cell is dead, then it springs to life only in the case that it has 3 live neighbors
+                //-If the cell is alive, then it stays alive if it has either 2 or 3 live neighbors
+                //-If the cell is dead, then it springs to life only in the case that it has 3 live neighbors
             for (int row = 0; row < _arrBefore.GetLength(0); row++)
             {
                 for (int col = 0; col < _arrBefore.GetLength(1); col++)
