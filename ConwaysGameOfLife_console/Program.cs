@@ -6,31 +6,37 @@ namespace ConwaysGameOfLife_console
     {
         static void Main(string[] args)
         {
-            int size = 20;
+            int width = Console.LargestWindowWidth;// 50; //Console.LargestWindowWidth;
+            int height = Console.LargestWindowHeight;// 50;//Console.LargestWindowHeight;
 
-            //ROWS ARE FIRST
-            int[,] arr = new int[size, size];
+            Console.SetWindowSize(width, height);
 
-            PrintArray(arr);
-            //arr[10, 10] = 1;
-            //arr[10, 11] = 1;
-            //arr[10, 12] = 1;
-            //arr[10, 13] = 1;
-            //arr[10, 14] = 1;
-            //arr[9, 10] = 1;
+            //if window is full screen minus 4 from width so that columns fit
+            if (width == Console.LargestWindowWidth)
+                width -= 4;
+            int[,] arr = new int[height, width];
 
-            ////should repeat:
+            ////blinker:
             //arr[4, 3] = 1;
             //arr[4, 4] = 1;
             //arr[4, 5] = 1;
 
-            PrintArray(arr);
+            ////toad:
+            //arr[20, 20] = 1;
+            //arr[20, 21] = 1;
+            //arr[20, 22] = 1;
+            //arr[21, 21] = 1;
+            //arr[21, 22] = 1;
+            //arr[21, 23] = 1;
+
+            //PrintArray(arr);
             
             RandomlyPopulateArray(arr);
-            PrintArray(arr); //WTF? IF I TURN THIS OFF IT SHOWS THE NEIGHBOURS AS THE CELLS AND STILL WORKS?
+            PrintArray(arr);
 
             for (int i = 0; i < 10000; i++)
             {
+                PrintArray(arr);
                 arr = CalcualteNewNumbers(arr);
                 PrintArray(arr);
             }
@@ -45,7 +51,6 @@ namespace ConwaysGameOfLife_console
             {
                 for (int col = 0; col < _arrBefore.GetLength(1); col++)
                 {
-
                     int aliveNeighbours = 0;
 
                     //should really be done as a loop instead of this massive IF block
@@ -76,7 +81,6 @@ namespace ConwaysGameOfLife_console
                     arrAfter[row, col] = aliveNeighbours;
                 }
             }
-            PrintArray(arrAfter);
 
             //assign values to new array based on amount of alive neighbours
 
@@ -105,14 +109,16 @@ namespace ConwaysGameOfLife_console
         static void PrintArray(int[,] arr)
         {
             Console.Clear();
+            var sb = new System.Text.StringBuilder();
             for (int i = 0; i < arr.GetLength(0); i++)
             {
                 for (int j = 0; j < arr.GetLength(1); j++)
                 {
-                    Console.Write(arr[i, j]);
+                    sb.Append(arr[i, j]);
                 }
-                Console.WriteLine();
+                sb.AppendLine();
             }
+            Console.Write(sb);
             Console.Read();
         }
 
