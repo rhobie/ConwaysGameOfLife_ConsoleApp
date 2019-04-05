@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace ConwaysGameOfLife_console
 {
@@ -9,13 +11,7 @@ namespace ConwaysGameOfLife_console
             int width = Console.LargestWindowWidth;// 50; //Console.LargestWindowWidth;
             int height = Console.LargestWindowHeight;// 50;//Console.LargestWindowHeight;
 
-            Console.SetWindowSize(width, height);
-            Console.ForegroundColor = ConsoleColor.Green;
-
-            if (width == Console.LargestWindowWidth) //minus 4 from width so that columns fit
-                width -= 4;
-            if (height == Console.LargestWindowHeight) // minus 1 from height so that columns fit
-                height -= 1;
+            SetupConsoleWindow(ref width, ref height);
             int[,] arr = new int[height, width];
 
             ////blinker:
@@ -83,7 +79,6 @@ namespace ConwaysGameOfLife_console
                     arrAfter[row, col] = aliveNeighbours;
                 }
             }
-
             //assign values to new array based on amount of alive neighbours
                 //-If the cell is alive, then it stays alive if it has either 2 or 3 live neighbors
                 //-If the cell is dead, then it springs to life only in the case that it has 3 live neighbors
@@ -115,7 +110,11 @@ namespace ConwaysGameOfLife_console
             {
                 for (int j = 0; j < arr.GetLength(1); j++)
                 {
-                    sb.Append(arr[i, j]);
+                    //sb.Append(arr[i, j]);
+                    if (arr[i, j] == 1)
+                        sb.Append("o");
+                    else
+                        sb.Append(" ");
                 }
                 sb.AppendLine();
             }
@@ -133,6 +132,30 @@ namespace ConwaysGameOfLife_console
                     arr[i, j] = rand.Next(2);
                 }
             }
+        }
+
+        static void SetupConsoleWindow(ref int width, ref int height)
+        {
+            Console.SetWindowSize(width, height);
+            Console.ForegroundColor = ConsoleColor.Green;
+
+            if (width == Console.LargestWindowWidth && height == Console.LargestWindowHeight)
+            {
+                Maximize();
+            }
+            if (width == Console.LargestWindowWidth) //minus 4 from width so that columns fit
+                width -= 4;
+            if (height == Console.LargestWindowHeight) // minus 2 from height so that columns fit
+                height -= 2;
+        }
+
+        [DllImport("user32.dll")]
+        public static extern bool ShowWindow(System.IntPtr hWnd, int cmdShow);
+
+        private static void Maximize()
+        {
+            Process p = Process.GetCurrentProcess();
+            ShowWindow(p.MainWindowHandle, 3); //SW_MAXIMIZE = 3
         }
     }
 }
